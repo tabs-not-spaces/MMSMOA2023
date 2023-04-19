@@ -6,26 +6,25 @@ $validityPeriod = 24
 $newCert = @{
     Subject           = "CN=$($subjectName)"
     CertStoreLocation = "Cert:\$($certStore)\My"
-    KeyExportPolicy   = "Exportable"    #Exportable not great security practice tbh, use NonExportable
+    KeyExportPolicy   = "NonExportable"    #Exportable not great security practice tbh, use NonExportable?
     KeySpec           = "Signature"
     NotAfter          = (Get-Date).AddMonths($($validityPeriod))
 }
-$Cert = New-SelfSignedCertificate @newCert
+$cert = New-SelfSignedCertificate @newCert
 
 #export public key only
 $certFolder = "C:\temp\certs"
 $certExport = @{
-    Cert     = $Cert
+    Cert     = $cert
     FilePath = "$($certFolder)\$($subjectName).cer"
 }
 Export-Certificate @certExport
 
 #export with private key
 $certFolder = "C:\temp\certs"
-$certThumbprint = $Cert.Thumbprint
 $certPassword = Read-Host -Prompt "Enter password for your certificate: " -AsSecureString
 $pfxExport = @{
-    Cert         = "Cert:\$($certStore)\My\$($certThumbprint)"
+    Cert         = "Cert:\$($certStore)\My\$($cert.Thumbprint)"
     FilePath     = "$($certFolder)\$($subjectName).pfx"
     ChainOption  = "EndEntityCertOnly"
     NoProperties = $null
@@ -33,11 +32,10 @@ $pfxExport = @{
 }
 Export-PfxCertificate @pfxExport
 
-#connect to service principal with MSAL using certificate for authentication. Requires the private key to be marked as exportable and user has privilege to read the key (Admin?)
+#connect to service principal with MSAL using certificate for authentication. 
 $clientID = "06daac75-f978-4039-b563-4278554067c6"
 $tenantID = "0cebf1f4-e0c4-46d4-8c5a-0fc80bed6b2c"
-$certThumbprint = $certThumbprint
-$clientCertificate = Get-ChildItem "Cert:\$($certStore)\my\$($certThumbprint)"
+$clientCertificate = Get-ChildItem "Cert:\$($certStore)\my\$($cert.Thumbprint)"
 $authToken = Get-MsalToken -clientID $clientID -tenantID $tenantID -clientCertificate $clientCertificate
 
 #make a Graph call using the token to test it works
@@ -55,4 +53,10 @@ $graphParams = @{
 }
 
 (Invoke-RestMethod @graphParams).value
+
+#alternative - use Microsoft.Graph module to connect using a certificate
+Install-Module Microsoft.Graph -Force
+Import-Module -Name Microsoft.Graph
+Connect-MgGraph -TenantId $tenantID -ClientId $clientID -Certificate $clientCertificate
+Get-mgContext
 #endregion
