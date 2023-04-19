@@ -36,7 +36,7 @@ Export-PfxCertificate @pfxExport
 #connect to service principal with MSAL using certificate for authentication. Requires the private key to be marked as exportable and user has privilege to read the key (Admin?)
 $clientID = "06daac75-f978-4039-b563-4278554067c6"
 $tenantID = "0cebf1f4-e0c4-46d4-8c5a-0fc80bed6b2c"
-$certThumbprint = "34ad11569e9d69b92a09f72f64791fd06beb2cc3"
+$certThumbprint = $certThumbprint
 $clientCertificate = Get-ChildItem "Cert:\$($certStore)\my\$($certThumbprint)"
 $authToken = Get-MsalToken -clientID $clientID -tenantID $tenantID -clientCertificate $clientCertificate
 
