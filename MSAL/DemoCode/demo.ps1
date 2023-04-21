@@ -59,4 +59,6 @@ Install-Module Microsoft.Graph -Force
 Import-Module -Name Microsoft.Graph
 Connect-MgGraph -TenantId $tenantID -ClientId $clientID -Certificate $clientCertificate
 Get-mgContext
+
+#Get-CBAToken.ps1 - putting it all together
 #endregion
