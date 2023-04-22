@@ -34,6 +34,8 @@ Function Get-Token {
 
 #get token
 $authToken = (Get-Token).AccessToken
+$authToken
 
 #test token
-Invoke-RestMethod -Headers @{"Authorization" = "$($AuthToken)"}-Method GET -Uri "https://graph.microsoft.com/beta/deviceAppManagement/mobileApps?$filter=(isof('microsoft.graph.win32LobApp'))"
+$testURI = Invoke-RestMethod -Headers @{"Authorization" = "$($AuthToken)"}-Method GET -Uri "https://graph.microsoft.com/beta/deviceAppManagement/mobileApps?$filter=(isof('microsoft.graph.win32LobApp'))"
+$testURI.value
