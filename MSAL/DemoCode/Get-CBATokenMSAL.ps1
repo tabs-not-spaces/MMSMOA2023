@@ -11,7 +11,7 @@
 
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $false)]
     [ValidateSet('LocalMachine', 'CurrentUser')]
     [string]$certStore = "LocalMachine",
     [string]$thumbprint = "34AD11569E9D69B92A09F72F64791FD06BEB2CC3",
