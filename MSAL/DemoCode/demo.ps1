@@ -39,7 +39,7 @@ $clientCertificate = Get-ChildItem "Cert:\$($certStore)\my\$($cert.Thumbprint)"
 $authToken = Get-MsalToken -clientID $clientID -tenantID $tenantID -clientCertificate $clientCertificate
 
 #make a Graph call using the token to test it works
-$resourceURI = "deviceAppManagement/mobileApps"
+$resourceURI = "deviceAppManagement/mobileApps?`$filter=(isof('microsoft.graph.win32LobApp'))"
 $method = "GET"
 $apiEndpoint = "beta"
 
@@ -60,5 +60,5 @@ Import-Module -Name Microsoft.Graph
 Connect-MgGraph -TenantId $tenantID -ClientId $clientID -Certificate $clientCertificate
 Get-mgContext
 
-#Get-CBAToken.ps1 - putting it all together
+#Get-CBATokenMSAL.ps1 - putting it all together
 #endregion

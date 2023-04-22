@@ -33,9 +33,22 @@ Function Get-Token {
 }
 
 #get token
-$authToken = (Get-Token).AccessToken
+$authToken = Get-Token
 $authToken
 
-#test token
-$testURI = Invoke-RestMethod -Headers @{"Authorization" = "$($AuthToken)"}-Method GET -Uri "https://graph.microsoft.com/beta/deviceAppManagement/mobileApps?$filter=(isof('microsoft.graph.win32LobApp'))"
-$testURI.value
+#make a Graph call using the token to test it works
+$resourceURI = "deviceAppManagement/mobileApps?`$filter=(isof('microsoft.graph.win32LobApp'))"
+$method = "GET"
+$apiEndpoint = "beta"
+
+$graphParams = @{
+    Headers = @{
+        "Content-Type"  = "application/json"
+        "Authorization" = "$($authToken.AccessToken)"
+    }
+    Method  = $method
+    URI     = "https://graph.microsoft.com/$($apiEndpoint)/$($resourceURI)"
+}
+
+$result = (Invoke-RestMethod @graphParams).value
+foreach ($app in $result) { $app | Select-Object id, displayName, displayVersion }
