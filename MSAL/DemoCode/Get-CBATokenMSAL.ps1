@@ -14,7 +14,7 @@ param (
     [Parameter(Mandatory = $true)]
     [ValidateSet('LocalMachine', 'CurrentUser')]
     [string]$certStore = "LocalMachine",
-    [string]$thumbprint = "C524D85CF46EE498B58F3874DE947A7F06A718AB",
+    [string]$thumbprint = "34AD11569E9D69B92A09F72F64791FD06BEB2CC3",
     [string]$tenantId = "0cebf1f4-e0c4-46d4-8c5a-0fc80bed6b2c",
     [string]$applicationId = "06daac75-f978-4039-b563-4278554067c6"
 )
