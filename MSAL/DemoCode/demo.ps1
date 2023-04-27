@@ -1,5 +1,5 @@
 #region certificates
-$subjectName = "AzureCertIntuneTesting"
+$subjectName = "AzureCertIntuneTesting999"
 $certStore = "LocalMachine"
 $validityPeriod = 24
 

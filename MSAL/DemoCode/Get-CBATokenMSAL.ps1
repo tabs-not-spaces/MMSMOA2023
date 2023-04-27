@@ -14,7 +14,7 @@ param (
     [Parameter(Mandatory = $false)]
     [ValidateSet('LocalMachine', 'CurrentUser')]
     [string]$certStore = "LocalMachine",
-    [string]$thumbprint = "34AD11569E9D69B92A09F72F64791FD06BEB2CC3",
+    [string]$thumbprint = "CCF4E88CC6C6F3BDC7D5ECEB00F4CCCAE9A74723",
     [string]$tenantId = "0cebf1f4-e0c4-46d4-8c5a-0fc80bed6b2c",
     [string]$applicationId = "06daac75-f978-4039-b563-4278554067c6"
 )
@@ -37,7 +37,7 @@ $authToken = Get-Token
 $authToken
 
 #make a Graph call using the token to test it works
-$resourceURI = "deviceAppManagement/mobileApps?`$filter=(isof('microsoft.graph.win32LobApp'))"
+$resourceURI = "deviceAppManagement/mobileApps?`$filter=(isof('microsoft.graph.win32LobApp')and startswith(displayName,'Microsoft'))"
 $method = "GET"
 $apiEndpoint = "beta"
 
