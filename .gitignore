@@ -1,0 +1,5 @@
+*local.ps1
+~*.pptx
+*.cer
+DS_Store
+.DS_Store

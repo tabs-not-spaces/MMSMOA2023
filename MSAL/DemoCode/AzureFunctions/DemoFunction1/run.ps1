@@ -13,7 +13,7 @@ try {
         $authHeader = @{Authorization = "Bearer $token"}
     }
     #endregion
-    #region main process
+    #region main proces
     $params = @{
         Method = 'Get'
         Uri = 'https://graph.microsoft.com/beta/devices'
