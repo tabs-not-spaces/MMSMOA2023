@@ -6,7 +6,7 @@ $validityPeriod = 24
 $newCert = @{
     Subject           = "CN=$($subjectName)"
     CertStoreLocation = "Cert:\$($certStore)\My"
-    KeyExportPolicy   = "NonExportable"    #Exportable not great security practice tbh, use NonExportable?
+    KeyExportPolicy   = "Exportable"    #Exportable not great security practice tbh, use NonExportable?
     KeySpec           = "Signature"
     NotAfter          = (Get-Date).AddMonths($($validityPeriod))
 }
