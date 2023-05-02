@@ -12,4 +12,3 @@ $requestBody = @{
 }
 $auth = Invoke-RestMethod -Method post -Uri "https://login.microsoftonline.com/$($env:tenant)/oauth2/token" -Body $requestBody
 $auth
-test
