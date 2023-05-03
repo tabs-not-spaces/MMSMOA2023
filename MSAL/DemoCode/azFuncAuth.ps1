@@ -9,7 +9,7 @@ else {
     $cred = New-Object System.Management.Automation.PSCredential $env:appId, ($env:secret | ConvertTo-SecureString -AsPlainText -Force)
     Connect-AzAccount -ServicePrincipal -Credential $cred -Tenant $env:tenant
     $token = (Get-AzAccessToken -ResourceUrl 'https://graph.microsoft.com').Token
-    $authHeader = @{Authorization = "Bearer $token"}
+    $authHeader = @{Authorization = "Bearer $token" }
 }
 #endregion
 
@@ -19,7 +19,7 @@ else {
     Disable-AzContextAutosave -Scope Process | Out-Null
     Connect-AzAccount -ServicePrincipal -ApplicationId $env:appId -CertificateThumbprint $env:certThumb -Tenant $env:tenant
     $token = (Get-AzAccessToken -ResourceUrl 'https://graph.microsoft.com').Token
-    $authHeader = @{Authorization = "Bearer $token"}
+    $authHeader = @{Authorization = "Bearer $token" }
 }
 #endregion
 
